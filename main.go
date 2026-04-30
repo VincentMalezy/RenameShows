@@ -24,7 +24,7 @@ func main() {
 		return
 	}
 
-	re := regexp.MustCompile(`^(.*?)\.S(\d{2})E(\d{2})`)
+	re := regexp.MustCompile(`^(.*?)(?:\.\d{4})?\.S(\d{2})E(\d{2})`)
 
 	//Recupere le nom de la serie et numero de saison
 	matches := re.FindStringSubmatch(episodesInFolder[0])
@@ -88,9 +88,20 @@ func main() {
 
 		episodeInfo := seasonResponse.Episodes[episodeNumber-1]
 		fmt.Printf("Nom de l'episode %d de la saison %d : %s\n", episodeInfo.Episode_number, episodeInfo.Season_number, episodeInfo.Name)
-		nomFichier := fmt.Sprintf("Episode %d - %s.mkv", episodeInfo.Episode_number, episodeInfo.Name)
 
-		RenameFile(episode, nomFichier)
+		numEpisode := fmt.Sprintf("Épisode %d", episodeInfo.Episode_number)
+
+		var nomFichier = ""
+
+		if episodeInfo.Name != numEpisode {
+			nomFichier = fmt.Sprintf("%s - %s.mkv", numEpisode, episodeInfo.Name)
+		} else {
+			nomFichier = fmt.Sprintf("%s.mkv", numEpisode)
+		}
+
+		fmt.Println(nomFichier)
+
+		// RenameFile(episode, nomFichier)
 
 	}
 

@@ -81,7 +81,7 @@ func getAPIKey() string {
 	if apiKey != "" {
 		return apiKey
 	}
-	keyFile, err := os.ReadFile("key.txt")
+	keyFile, err := os.ReadFile("apikey.txt")
 	if err != nil {
 		fmt.Println("Error reading API key:", err)
 		return ""
