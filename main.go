@@ -60,6 +60,11 @@ func main() {
 	//Recupere les infos de la saison
 	seasonResponse, err := CreateRequestAndGetResponse[DetailsResponse](path, queryParams)
 
+	if err != nil {
+		fmt.Println("Error making request :", err)
+		return
+	}
+
 	if len(seasonResponse.Episodes) == 0 {
 		fmt.Println("No episodes found")
 		return
@@ -83,7 +88,7 @@ func main() {
 
 		episodeInfo := seasonResponse.Episodes[episodeNumber-1]
 		fmt.Printf("Nom de l'episode %d de la saison %d : %s\n", episodeInfo.Episode_number, episodeInfo.Season_number, episodeInfo.Name)
-		nomFichier := fmt.Sprintf("Episode %d - %s", episodeInfo.Episode_number, episodeInfo.Name)
+		nomFichier := fmt.Sprintf("Episode %d - %s.mkv", episodeInfo.Episode_number, episodeInfo.Name)
 
 		RenameFile(episode, nomFichier)
 
